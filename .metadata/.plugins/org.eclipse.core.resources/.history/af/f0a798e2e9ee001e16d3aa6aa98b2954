@@ -1,0 +1,49 @@
+package com.employee.EmpData.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
+import com.employee.EmpData.service.EmployeeService;
+
+@RestController
+public class EmployeeController {
+	
+	   @Autowired
+	    private EmployeeService employeeService;
+
+	    @PostMapping("/employees")
+	    public ResponseEntity<String> createEmployee(@RequestBody EmpAllDataRequest employee) {
+	        String result= employeeService.createEmployee(employee);
+	        return ResponseEntity.ok(result);
+	    }
+
+	    @GetMapping("employees/{employeeId}")
+	    public EmpAllDataResponse getEmployee(@PathVariable Long employeeId) {
+	        return employeeService.getEmployee(employeeId);
+	    }
+//
+//	    @GetMapping("/personal/{employeeId}")
+//	    public PersonalDetails getPersonalDetails(@PathVariable String employeeId) {
+//	        return employeeService.getPersonalDetails(employeeId);
+//	    }
+//
+//	    @PutMapping("/{employeeId}")
+//	    public Employee updateEmployee(@PathVariable String employeeId, @RequestBody Employee employee) {
+//	        return employeeService.updateEmployee(employeeId, employee);
+//	    }
+//
+//	    @DeleteMapping("/{employeeId}")
+//	    public void deleteEmployee(@PathVariable String employeeId) {
+//	        employeeService.deleteEmployee(employeeId);
+//	    }
+
+}

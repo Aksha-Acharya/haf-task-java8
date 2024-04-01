@@ -1,0 +1,5 @@
+package com.employee.EmpData.entity.repository.dao;
+
+public class EmpAllDataResponse {
+
+}

@@ -1,0 +1,109 @@
+package com.employee.EmpData.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
+import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
+import com.employee.EmpData.service.EmployeeService;
+import com.microservice.EmpOfficeDetails.Exception.NoSuchEmployeeFoundException;
+import com.microservice.EmpOfficeDetails.request.EmployeeAllDataRequest;
+import com.microservice.EmpOfficeDetails.response.EmpOfficeDetailResponse;
+import com.microservice.EmpOfficeDetails.response.PersonalDetailResponse;
+
+import jakarta.validation.Valid;
+
+@RestController
+public class EmployeeController {
+	
+	   @Autowired
+	    private EmployeeService employeeService;
+	   
+	   
+	   @PostMapping("/employees")
+		public ResponseEntity<?> createEmployee(@RequestBody @Valid EmployeeAllDataRequest empOffc, BindingResult result) {
+
+			if (result.hasErrors()) {
+				Map<String, String> errors = new HashMap<>();
+				result.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+				return ResponseEntity.badRequest().body(errors);
+			}
+			return ResponseEntity.ok(employeeService.createEmployee(empOffc));
+		}
+
+		@GetMapping("/employees/{employeeId}")
+		public ResponseEntity<EmpOfficeDetailResponse> getEmployee(@PathVariable("employeeId") Long empId)
+				{
+			
+			EmpOfficeDetailResponse officeDetail = employeeService.getEmployee(empId);
+			return ResponseEntity.ok(officeDetail);
+		}
+
+		@GetMapping("/employees/personal/{employeeId}")
+		public ResponseEntity<PersonalDetailResponse> getPersonalDetails(
+				 @PathVariable("employeeId") Long empId) {
+		//
+			PersonalDetailResponse personalDetailResponse = employeeService.getPersonalDetails(empId);
+			return ResponseEntity.ok(personalDetailResponse);
+		}
+
+		@PutMapping("/employees/{employeeId}")
+		public ResponseEntity<?> updateEmployee(@Valid @RequestBody EmployeeAllDataRequest updateDetail,
+				  @PathVariable("employeeId") Long empId, BindingResult result) {
+			if (result.hasErrors()) {
+				// If there are validation errors, return a response with the validation errors
+				Map<String, String> errors = new HashMap<>();
+				result.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+				return ResponseEntity.badRequest().body(errors);
+			}
+			return ResponseEntity.ok(employeeService.updateEmployee(updateDetail, empId));
+		}
+
+
+		@DeleteMapping("/employees/{employeeId}")
+		public String deleteEmployee(@PathVariable("employeeId") Long empId)
+				 {
+			employeeService.deleteEmployee(empId);
+			return "Employee detail deleted completely";
+		}
+
+
+//	    @PostMapping("/employees")
+//	    public ResponseEntity<String> createEmployee(@RequestBody EmpAllDataRequest employee) {
+//	        String result= employeeService.createEmployee(employee);
+//	        return ResponseEntity.ok(result);
+//	    }
+//
+//	    @GetMapping("/employees/{employeeId}")
+//	    public EmpAllDataResponse getEmployee(@PathVariable Long employeeId) {
+//	        return employeeService.getEmployee(employeeId);
+//	    }
+//
+//	    @GetMapping("/employees/personal/{employeeId}")
+//	    public PersonaldataDao getPersonalDetails(@PathVariable Long employeeId) {
+//	        return employeeService.getPersonalDetails(employeeId);
+//	    }
+//
+//	    @PutMapping("/employees/{employeeId}")
+//	    public String updateEmployee(@PathVariable Long employeeId, @RequestBody EmpAllDataRequest employee) {
+//	        return employeeService.updateEmployee(employeeId, employee);
+//	    }
+//
+//	    @DeleteMapping("/employees/{employeeId}")
+//	    public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId) {
+//	        return ResponseEntity.ok(employeeService.deleteEmployee(employeeId));
+//	    }
+
+}

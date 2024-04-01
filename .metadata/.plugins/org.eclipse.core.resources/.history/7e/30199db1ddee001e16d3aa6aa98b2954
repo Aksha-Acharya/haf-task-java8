@@ -1,0 +1,18 @@
+package com.employee.EmpData.entity.repository.dao;
+
+import com.employee.EmpData.dto.EmpAllDataRequest;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class EmpAllDataResponse {
+	
+	OfficedataDao officedataDao;
+	PersonaldataDao personaldataDao;
+	
+	
+}

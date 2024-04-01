@@ -1,0 +1,22 @@
+package com.employee.EmpData.entity.repository.dao;
+
+import com.employee.EmpData.entity.Personaldata;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class OfficedataDao {	
+	  	private String employeeName;
+	    private String dateOfJoining;
+	    private String designation;
+	    private String projectName;
+	    private String employeeType;
+	    private Personaldata personalDetails;
+
+}

@@ -1,0 +1,69 @@
+package com.employee.EmpData.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
+import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
+import com.employee.EmpData.service.EmployeeService;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
+@RestController
+public class EmployeeController {
+	
+	   @Autowired
+	    private EmployeeService employeeService;
+	   
+
+	    @PostMapping("/employees")
+	    public ResponseEntity<?> createEmployee(@RequestBody @Valid EmpAllDataRequest employee, BindingResult error) {
+	    	if (error.hasErrors()) {
+				Map<String, String> errors = new HashMap<>();
+				error.getFieldErrors().forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
+				return ResponseEntity.badRequest().body(errors);
+			}
+	        String result= employeeService.createEmployee(employee);
+	        return ResponseEntity.ok(result);
+	    }
+
+	    @GetMapping("/employees/{employeeId}")
+	    public EmpAllDataResponse getEmployee(@PathVariable @NotNull Long employeeId) {
+	        return employeeService.getEmployee(employeeId);
+	    }
+
+	    @GetMapping("/employees/personal/{employeeId}")
+	    public PersonaldataDao getPersonalDetails(@PathVariable @NotNull Long employeeId) {
+	        return employeeService.getPersonalDetails(employeeId);
+	    }
+
+	    @PutMapping("/employees/{employeeId}")
+	    public ResponseEntity<?> updateEmployee(@PathVariable @NotNull Long employeeId, @RequestBody @Valid EmpAllDataRequest employee,BindingResult result) {
+	    	if (result.hasErrors()) {
+				Map<String, String> errors = new HashMap<>();
+				result.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+				return ResponseEntity.badRequest().body(errors);
+			}
+	    	
+	    	return ResponseEntity.ok(employeeService.updateEmployee(employeeId, employee));
+	    }
+
+	    @DeleteMapping("/employees/{employeeId}")
+	    public ResponseEntity<String> deleteEmployee(@PathVariable @NotNull Long employeeId) {
+	        return ResponseEntity.ok(employeeService.deleteEmployee(employeeId));
+	    }
+
+}

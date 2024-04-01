@@ -1,0 +1,33 @@
+package com.employee.EmpData.entity.repository.dao;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@Data
+public class EmpAllDataResponse {
+	
+	OfficedataDao officedataDao;
+	PersonaldataDao personaldataDao;
+	PersonaldatawithoutSalary personaldatawithoutSalary;
+	
+	public EmpAllDataResponse(OfficedataDao officedataDao, PersonaldataDao personaldataDao) {		
+		this.officedataDao = officedataDao;
+		this.personaldataDao = personaldataDao;
+	}
+
+	public EmpAllDataResponse(OfficedataDao officedataDao, PersonaldatawithoutSalary personaldatawithoutSalary) {
+		this.officedataDao = officedataDao;
+		this.personaldatawithoutSalary = personaldatawithoutSalary;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,5 @@
+package com.employee.EmpData.exception;
+
+public class ForbiddenException {
+
+}

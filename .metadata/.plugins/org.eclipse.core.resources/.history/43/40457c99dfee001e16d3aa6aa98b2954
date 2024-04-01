@@ -1,0 +1,26 @@
+package com.employee.EmpData.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.entity.repository.OfficedataRepository;
+import com.employee.EmpData.entity.repository.PersonaldataRepository;
+import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
+
+@Service
+public class EmployeeService {
+	
+	@Autowired
+	OfficedataRepository officedataRepository;
+	@Autowired
+	PersonaldataRepository personaldataRepository;
+
+	public EmpAllDataResponse createEmployee(EmpAllDataRequest employee) {
+		
+		return null;
+	}
+	
+	
+
+}

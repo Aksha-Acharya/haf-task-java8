@@ -1,0 +1,5 @@
+package com.employee.EmpData.entity;
+
+public class Personaldata {
+
+}

@@ -1,0 +1,44 @@
+package com.employee.EmpData.entity.repository.dao;
+
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@Data
+public class EmpAllDataResponse {
+	
+	OfficedataDao officedataDao;
+	PersonaldatawithoutSalary personaldatawithoutSalary;
+
+	public EmpAllDataResponse(OfficedataDao officedataDao, PersonaldatawithoutSalary personaldatawithoutSalary) {
+		this.officedataDao = officedataDao;
+		this.personaldatawithoutSalary = personaldatawithoutSalary;
+	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Employee data [officedata"
+				+ " { employeeName =" + officedataDao.getEmployeeName()
+				+" dateOfJoining=" + officedataDao.getDateOfJoining() 
+				+ ", designation="
+				+ officedataDao.getDesignation()
+				+ ", projectName=" + officedataDao.getProjectName()
+				+ ", employeeType=" + officedataDao.getEmployeeType() 
+				+"}	"+", personaldata {"
+				+"personal name=" + personaldatawithoutSalary.getName()
+				+", dob=" + personaldatawithoutSalary.getDob() 
+				+ ", address=" + personaldatawithoutSalary.getAddress()
+				+ ", phoneNo="
+				+ personaldatawithoutSalary.getPhoneNo() 
+				+", emailAddress=" + personaldatawithoutSalary.getEmailAddress()
+				+"}]";
+	}
+
+
+
+	
+}

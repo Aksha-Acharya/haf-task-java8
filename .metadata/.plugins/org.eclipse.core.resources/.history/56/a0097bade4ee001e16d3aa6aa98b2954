@@ -1,0 +1,50 @@
+package com.employee.EmpData.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.entity.Officedata;
+import com.employee.EmpData.entity.Personaldata;
+import com.employee.EmpData.entity.repository.OfficedataRepository;
+import com.employee.EmpData.entity.repository.PersonaldataRepository;
+import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
+import com.employee.EmpData.entity.repository.dao.OfficedataDao;
+import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
+
+@Service
+public class EmployeeService {
+	
+	@Autowired
+	OfficedataRepository officedataRepository;
+	@Autowired
+	PersonaldataRepository personaldataRepository;
+
+	public EmpAllDataResponse createEmployee(EmpAllDataRequest employee) {
+		
+		Officedata officedata = new Officedata();
+		officedata.setEmployeeName(employee.getEmployeeName());
+		officedata.setProjectName(employee.getProjectName());
+		officedata.setDateOfJoining(employee.getDateOfJoining());
+		officedata.setDesignation(employee.getDesignation());
+		officedata.setEmployeeType(employee.getEmployeeType());
+		
+		officedataRepository.save(officedata);
+		
+		Personaldata personaldata = new Personaldata();
+		personaldata.setName(employee.getEmployeeName());
+		personaldata.setDob(employee.getDob());
+		personaldata.setEmailAddress(employee.getEmailAddress());
+		personaldata.setPhoneNo(employee.getPhoneNo());
+		personaldata.setSalary(employee.getSalary());
+		personaldata.setAddress(employee.getAddress());
+		
+		personaldataRepository.save(personaldata);
+		
+		OfficedataDao officeDao = new OfficedataDao(employee);
+		PersonaldataDao personaldataDao = new PersonaldataDao(employee);
+		return new EmpAllDataResponse(officeDao,personaldataDao );
+	
+	}
+
+}

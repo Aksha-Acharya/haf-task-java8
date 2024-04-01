@@ -1,0 +1,19 @@
+package com.employee.EmpData.entity.repository.dao;
+
+import com.employee.EmpData.entity.Personaldata;
+
+public class PersonaldatawithoutSalary {
+	private String name;
+    private String dob;
+    private String address;
+    private String phoneNo;
+    private String emailAddress;
+    
+    public PersonaldatawithoutSalary(Personaldata personaldata) {
+		this.name=personaldata.getName();
+    	this.dob=personaldata.getDob();
+    	this.address=personaldata.getAddress();
+    	this.phoneNo=personaldata.getPhoneNo();
+    	this.emailAddress=personaldata.getEmailAddress();
+
+}}

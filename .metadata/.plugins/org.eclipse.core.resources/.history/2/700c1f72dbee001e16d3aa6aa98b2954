@@ -1,0 +1,27 @@
+package com.employee.EmpData.dto;
+
+import com.employee.EmpData.entity.repository.dao.OfficedataDao;
+import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class EmpAllData {
+	private String employeeName;
+    private String dateOfJoining;
+    private String designation;
+    private String projectName;
+    private String employeeType;
+    private String dob;
+    private String address;
+    private String phoneNo;
+    private String emailAddress;
+    private double salary;
+
+}
