@@ -42,5 +42,9 @@ public class EmpAllDataRequest {
     private String emailAddress;
 	@NotNull(message = "Salary is required")
     private double salary;
+	
+	private String username;
+	private String password;
+	private String roles;
 
 }

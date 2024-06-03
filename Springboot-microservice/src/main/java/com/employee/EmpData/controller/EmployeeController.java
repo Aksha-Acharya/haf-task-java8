@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.employee.EmpData.dto.EmpAllDataRequest;
 import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
 import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
 import com.employee.EmpData.exception.EmployeeNotFoundException;
 import com.employee.EmpData.service.EmployeeService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,6 +55,7 @@ public class EmployeeController {
 			)
 	
 	@GetMapping("/employees/{employeeId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMP')")
 	public EmpAllDataResponse getEmployee(@PathVariable @NotNull Long employeeId)
 			throws EmployeeNotFoundException {
 		EmpAllDataResponse emp=employeeService.getEmployee(employeeId);
@@ -67,6 +67,7 @@ public class EmployeeController {
 			description = "It is used to return Employee Personal data saved in the database. It displays only personal data of the Employee"					
 			)
 	@GetMapping("/employees/personal/{employeeId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMP','ROLE_MANAGER')")
 	public ResponseEntity<PersonaldataDao> getPersonalDetails(@PathVariable @NotNull Long employeeId)
 			throws EmployeeNotFoundException {
 		return ResponseEntity.ok(employeeService.getPersonalDetails(employeeId));
@@ -77,6 +78,7 @@ public class EmployeeController {
 			description = "It is used to update the Employee data saved in the database. It updates both personal data and officedata of the Employee"					
 			)
 	@PutMapping("/employees/{employeeId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
 	public ResponseEntity<?> updateEmployee(@PathVariable @NotNull Long employeeId,
 			@RequestBody @Valid EmpAllDataRequest employee, BindingResult result) throws EmployeeNotFoundException {
 		if (result.hasErrors()) {
@@ -92,6 +94,7 @@ public class EmployeeController {
 			description = "It is used to delete the Employee data saved in the database. It deletes both personal data and office data of the Employee"					
 			)
 	@DeleteMapping("/employees/{employeeId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<String> deleteEmployee(@PathVariable @NotNull Long employeeId)
 			throws EmployeeNotFoundException {
 		return ResponseEntity.ok(employeeService.deleteEmployee(employeeId));

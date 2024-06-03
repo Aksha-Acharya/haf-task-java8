@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.employee</groupId>
-	<artifactId>EmpData</artifactId>
+	<artifactId>Springboot-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>EmpData</name>
 	<description>Employee has both office data and personal data</description>
@@ -41,11 +41,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
-
-</dependency>
+<version>3.2.4</version>
+    </dependency>
 
    <dependency>
       <groupId>org.springdoc</groupId>

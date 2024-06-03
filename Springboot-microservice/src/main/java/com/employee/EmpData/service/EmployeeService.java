@@ -1,18 +1,25 @@
 package com.employee.EmpData.service;
 
 import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.employee.EmpData.dto.EmpAllDataRequest;
+import com.employee.EmpData.encryption.LoginServiceImpl;
 import com.employee.EmpData.entity.Officedata;
 import com.employee.EmpData.entity.Personaldata;
+import com.employee.EmpData.entity.UserAccess;
 import com.employee.EmpData.entity.repository.OfficedataRepository;
 import com.employee.EmpData.entity.repository.PersonaldataRepository;
+import com.employee.EmpData.entity.repository.UserAccessRepository;
 import com.employee.EmpData.entity.repository.dao.EmpAllDataResponse;
 import com.employee.EmpData.entity.repository.dao.OfficedataDao;
 import com.employee.EmpData.entity.repository.dao.PersonaldataDao;
 import com.employee.EmpData.entity.repository.dao.PersonaldatawithoutSalary;
 import com.employee.EmpData.exception.EmployeeNotFoundException;
+import com.employee.EmpData.utility.GenerateUsername;
 
 @Service
 public class EmployeeService {
@@ -21,6 +28,17 @@ public class EmployeeService {
 	OfficedataRepository officedataRepository;
 	@Autowired
 	PersonaldataRepository personaldataRepository;
+	@Autowired
+	UserAccessRepository userAccessRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	GenerateUsername generateUsername;
+	
+	@Autowired
+	LoginServiceImpl loginService;
 
 	public String createEmployee(EmpAllDataRequest employee) {
 		
@@ -41,7 +59,15 @@ public class EmployeeService {
 		personaldata.setOfficedata(officedata);
 		personaldataRepository.save(personaldata);
 		
-		return "Employee created successfully with empId :"+ officedata.getEmployeeId();
+		UserAccess userAccess = new UserAccess();
+		userAccess.setUsername(employee.getUsername());
+		userAccess.setPassword(passwordEncoder.encode(employee.getPassword()));
+		userAccess.setRoles(employee.getRoles());
+		userAccess.setOfficedata(officedata);
+		userAccessRepository.save(userAccess);
+		
+		return "Employee created successfully with empId :"+ officedata.getEmployeeId()+"\n"
+		+"and username:"+employee.getUsername() + "  password :"+employee.getPassword();
 	
 	}
 

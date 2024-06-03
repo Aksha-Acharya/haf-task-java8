@@ -36,6 +36,9 @@ public class Officedata{
 		
 	    @OneToOne(mappedBy = "officedata",cascade = CascadeType.ALL)
 	    private Personaldata personalDetails;
+	    
+	    @OneToOne(mappedBy = "officedata",cascade = CascadeType.ALL)
+	    private UserAccess userAccess;
 	  
 	 
 }

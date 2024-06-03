@@ -47,5 +47,5 @@ public class Personaldata {
 	    @JoinColumn(name = "employeeId")
 	    private Officedata officedata;
 	    
-	    
+	    	    
 }
